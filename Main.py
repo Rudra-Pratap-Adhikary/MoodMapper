@@ -9,6 +9,7 @@ from fastapi.responses import FileResponse
 import numpy as np
 import pickle
 import re
+import uvicorn
 
 
 
@@ -73,9 +74,6 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0",debug= True)
-
 app.add_middleware(
     CORSMiddleware,
     allow_credentials= True,
@@ -124,3 +122,6 @@ def predict_emotion(text_input : textInput):
         confidence= probabilities[top_emotion_index],
         all_probalities= all_probabilities
     )
+
+if __name__ == "__main__":
+    uvicorn.run("Main:app", host="0.0.0.0", port=8000, reload=True)
